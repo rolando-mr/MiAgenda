@@ -98,8 +98,21 @@ fun AgendaVista() {
         LazyColumn {
             items(contactos) { contacto ->
                 Column(modifier = Modifier.fillMaxSize().background(color = Color.LightGray).padding(8.dp)) {
-                    Text("${contacto.nombre}")
+                    Text(text="${contacto.nombre}")
                     Text("${contacto.telefono}")
+                    Row(){
+                        Button(onClick = {
+                            nombre=contacto.nombre
+                            telefono=contacto.telefono.toString()
+                            agenda.borrarContacto(contacto.nombre)
+                        }) {Text(text = "Editar") }
+                        Button(onClick = {
+                            agenda.borrarContacto(contacto.nombre)
+                            contactos = agenda.contactos.toList()
+
+                        }) {Text(text = "Eliminar") }
+
+                    }
                 }
             }
         }
