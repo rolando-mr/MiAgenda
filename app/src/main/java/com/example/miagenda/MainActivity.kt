@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
@@ -93,5 +94,16 @@ fun AgendaVista() {
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
         Text("Lista de Contactos",)
+
+        LazyColumn {
+            items(contactos) { contacto ->
+                Column(modifier = Modifier.fillMaxSize().background(color = Color.LightGray).padding(8.dp)) {
+                    Text("${contacto.nombre}")
+                    Text("${contacto.telefono}")
+                }
+            }
+        }
     }
+
+
 }
