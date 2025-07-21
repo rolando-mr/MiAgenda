@@ -10,8 +10,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
@@ -98,25 +100,27 @@ fun AgendaVista() {
         LazyColumn {
             items(contactos) { contacto ->
                 Column(modifier = Modifier.fillMaxSize().background(color = Color.LightGray).padding(8.dp)) {
-                    Text(text="${contacto.nombre}")
-                    Text("${contacto.telefono}")
+                    Text(text=contacto.nombre, modifier = Modifier.padding(bottom = 4.dp))
+                    Text(text="${contacto.telefono}")
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 2.dp), color =Color.Black )
                     Row(){
-                        Button(onClick = {
+                        IconButton(onClick = {
                             nombre=contacto.nombre
                             telefono=contacto.telefono.toString()
                             agenda.borrarContacto(contacto.nombre)
-                        }) {Text(text = "Editar") }
-                        Button(onClick = {
+                        }, modifier = Modifier.padding(end = 8.dp)
+                        ) {Icon(painter = painterResource(id = R.drawable.baseline_delete_24), contentDescription = "Editar") }
+                        IconButton(onClick = {
                             agenda.borrarContacto(contacto.nombre)
                             contactos = agenda.contactos.toList()
 
-                        }) {Text(text = "Eliminar") }
+                        }) {Icon(painter = painterResource(id = R.drawable.baseline_mode_edit_24), contentDescription = "Editar")}
 
                     }
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 2.dp), color =Color.Black)
                 }
+                Spacer(modifier = Modifier.height(5.dp))
             }
         }
     }
-
-
 }
