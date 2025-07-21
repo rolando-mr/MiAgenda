@@ -1,34 +1,49 @@
 package com.example.miagenda
 
-class Agenda{
+import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+
+//val Context.dataStore by preferencesDataStore(name = "agenda_prefs")
+//val CONTACTOS_KEY = stringPreferencesKey("contactos")
+private val archivoCSV = "contactos.csv"
+
+class Agenda(private val context: Context) {
+
+    //private val gson = Gson()
     var contactos = mutableListOf<Contacto>()
 
-    fun agregarContacto(contacto: Contacto){
+    init {
+        //cargarContactos()
+    }
+
+    fun agregarContacto(contacto: Contacto) {
         contactos.add(contacto)
+        //guardarContactos()
     }
-    fun listarContactos(){
-        for(contacto in contactos){
-            println("${contacto.nombre} - ${contacto.telefono}")
+
+    fun borrarContacto(nombre: String): Boolean {
+        val contacto = contactos.find { it.nombre.equals(nombre, ignoreCase = true) }
+        val eliminado = contacto?.let { contactos.remove(it) } ?: false
+        if (eliminado) {
+        //guardarContactos()
         }
+        return eliminado
     }
-    fun buscarContacto(nombre:String):Contacto?{
-        for(contacto in contactos){
-            if(contacto.nombre.equals(nombre,true)){
-                return contacto
-            }
-        }
-        return null
-    }
-    fun borrarContacto(nombre:String):Boolean{
-        for(contacto in contactos){
-            if(contacto.nombre.equals(nombre,true)){
-                contactos.remove(contacto)
-                return true
-            }
+
+    fun editarContacto(nombreAntiguo: String, nuevoContacto: Contacto): Boolean {
+        val index = contactos.indexOfFirst { it.nombre.equals(nombreAntiguo, ignoreCase = true) }
+        if (index >= 0) {
+            contactos[index] = nuevoContacto
+            //guardarContactos()
+            return true
         }
         return false
     }
-    fun editarContacto(){
 
-    }
 }
